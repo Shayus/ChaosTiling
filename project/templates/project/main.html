@@ -1,0 +1,71 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Dashboard</title>
+        <!--Jquery&Bootstrap-->
+        <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+        <script type="text/javascript" src="{% static 'bootstrap/js/bootstrap.js' %}"></script>
+        <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.css' %}">
+        <!--ColorPicker 3.0
+        <link rel="stylesheet" href="{% static 'colorpicker/css/colorpicker.css' %}">
+        <script type="module" src="{% static 'colorpicker/js/Colorpicker.js' %}"></script>
+        -->
+        <!--ColorPicker 1.0-->
+        <link rel="stylesheet" href="{% static 'css/colorpicker.css'%}">
+        <script type="text/javascript" src="{% static 'js/FUNCTION/colorpicker.js'%}"></script>
+
+    </head>
+    <body>
+        {% include 'project/navbar.html' %}
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-3" id="111">
+                {% block content %}
+
+                {% endblock %}
+                </div>
+                <div class="col-md-9">
+                    <canvas id="canvas" style="background-color: black;">Please  use a browser that supports "canvas"</canvas>
+                </div>
+            </div>
+        </div>
+
+        <!--WebGL-->
+        <script type="text/javascript" src="{% static 'js/WebGL-SRC/cuon-matrix.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/WebGL-SRC/cuon-utils.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/WebGL-SRC/webgl-utils.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/WebGL-SRC/webgl-debug.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/INIT/webgl_init.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/SHADER/VSHADER_SOURCE.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/FUNCTION/draw.js' %}"></script>
+        <script type="text/javascript">
+            $(window).resize(window_init());
+            // 初始化
+            $(document).ready(function(){
+                $('#cp1').colorpicker();
+                $('#cp2').colorpicker()
+                $.ajax({
+                    type: "GET",
+                    url: "init/",
+                    dataType: "json",
+                    success: function (data) {
+                        for(let i=1; i<data.function.length+1;i++){
+                            var add_g = '<option value=' + i + '>'+data.function[i-1].discribe+'</option>';
+                            $('#hd').append(add_g);
+                        }
+                        for(let i=1; i<data.judge.length+1;i++){
+                            var add_j = '<option value=' + i + '>'+data.judge[i-1].discribe+'</option>';
+                            $('#sl').append(add_j);
+                        }
+                        for(let i=1; i<data.shape.length+1;i++){
+                            var add_s = '<option value=' + i + '>'+data.shape[i-1].discribe+'</option>';
+                            $('#fs').append(add_s);
+                        }
+                        
+                    }
+                })
+            })
+        </script>
+    </body>
+</html>

@@ -1,0 +1,324 @@
+FSHADER_HEAD = 
+    precision mediump float;
+FSHADER_FUN_f = 
+    float B = 1.0 / sqrt(3.0);    
+    float C = 2.0 / sqrt(3.0);   
+    float D = sqrt(3.0) / 2.0;   
+    float r = 0.2;   
+    float s = 0.1;   
+    float h1x(float x){   
+        return 0.5 * x;   
+    }   
+    float h1y(float y){   
+        return   D * y;    
+    }   
+    float h2x(float x){   
+        return   D * x;   
+    }   
+    float h2y(float y){   
+        return 0.5 * y;   
+    }   
+    vec4 M(float x, float y){   
+        float a0= x;   
+        float b0= y;   
+        float n=0.0;   
+        float a1;   
+        float b1;
+FSHADER_G_1 =
+    for (int i=0; i<9; i    ) {  
+        a1 = a0 - sin(a0) * cos(b0);   
+        b1 = b0 - cos(2.0 * a0)*sin(b0);
+FSHADER_G_2 =
+    for (int i=0; i<14; i    ) {   
+        float t1_1 = 2.0 * r * sin(a0) * cos(C * b0);    
+        float t1_2 = 2.0 * s * sin(h1x(a0) - h1y(b0)) * cos(C * h2x(a0)   C * h2y(b0));   
+        float t1_3 = 2.0 * (s - r) * sin(-h1x(a0) - h1y(b0)) * cos(C * h2x(a0) - C * h2y(b0));   
+        float t1 = t1_1    t1_2    t1_3;   
+        a1 = a0 - t1;   
+        float t2_1 = B * a1;   
+        float t2_2 = 2.0 * r * sin(h1x(a0)-h1y(b0)) * cos(C * (h2x(a0)    h2y(b0)));   
+        float t2_3 = 2.0 * s * sin(-h1x(a0) - h1y(b0)) * cos(C * (h2x(a0)-h2y(b0)));   
+        float t2_4 = 2.0 * (s - r) * sin(a0) * cos(C * b0);    
+        float t2 = t2_1 - C *(t2_2    t2_3 - t2_4);   
+        b1 = b0 - t2;
+FSHADER_G_3 =
+    for (int i=0; i<19; i    ) {   
+        float t1_1 = sin( a0) * cos(2.0*b0) - sin(-a0) * cos(-2.0 * b0);   
+        float t1_2 = sin(-a0) * cos(2.0*a0) - sin( b0) * cos(-2.0 * a0);   
+        a1 = a0 - (0.2 * t1_1    0.1 * t1_2);   
+        float t2_1 = sin(-b0) * cos( 2.0 * a0) - sin(b0) * cos(-2.0 * a0);   
+        float t2_2 = sin(-a0) * cos(-2.0 * b0) - sin(a0) * cos( 2.0 * b0);   
+        b1 = b0 - (-0.2 * t2_1 - 0.1 * t2_2);
+FSHADER_G_4 =
+    for (int i=0; i<5; i    ) {  
+        a1 = cos(0.5 * a0 * cos(b0-a1)) * exp(-a0*b0);   
+        b1 = 1.1 * exp(2.0 * a0 * b0);
+FSHADER_J_1 =
+        float c = sqrt( (a1-a0)*(a1-a0)    (b1-b0)*(b1-b0) );   
+        if(c <= 0.1){   
+            break;   
+        }
+FSHADER_J_2 =
+        float c = abs(a1*a1    b1*b1 - a0*a0 - b0*b0);   
+        if(c <= 0.1){   
+            break;   
+        }
+FSHADER_J_3 =
+        float a = 0.5;   
+        float c = pow(pow(a1-a0,a)  pow(b1-b0,a), 1.0/a);   
+        if(c <= 0.1){   
+            break;   
+        }
+
+
+FSHADER_FUN_end=
+        n = n    1.0;   
+        a0 = a1;   
+        b0 = b1;   
+    }
+
+
+FSHADER_COLOR =
+    n = mod(n,5.0);   
+    float r=0.0,g=0.0,b=0.0;   
+    if(n == 0.0){    
+        r = 255.0;   
+        g = 255.0;   
+        b = 255.0;   
+    }   
+    else if(n==1.0){   
+        r = 254.0;   
+        g = 67.0;   
+        b = 101.0;   
+    }    
+    else if(n==2.0){   
+        r = 252.0;   
+        g = 157.0;   
+        b = 154.0;   
+    }   
+    else if(n==3.0){   
+        r = 249.0;   
+        g = 205.0;   
+        b = 173.0;   
+    }   
+    else if(n==4.0){   
+        r = 200.0;   
+        g = 200.0;   
+        b = 169.0;   
+    }   
+    else if(n==5.0){   
+        r = 131.0;   
+        g = 175.0;   
+        b = 155.0;   
+    }
+
+
+FSHADER_COLOR_SET_1=
+    return vec4(r/255.0, g/255.0, b/255.0, 1.0);   
+}
+FSHADER_COLOR_SET_2=
+    return vec4(r/255.0, g/255.0, b/255.0, 1.0);   
+}
+FSHADER_COLOR_SET_3=
+    return vec4(r/255.0, g/255.0, b/255.0, 1.0);   
+}
+FSHADER_COLOR_SET_4=
+    return vec4(r/255.0, g/255.0, b/255.0, 1.0);   
+}
+FSHADER_COLOR_SET_5=
+    return vec4(r/255.0, g/255.0, b/255.0, 1.0);   
+}
+FSHADER_COLOR_SET_6=
+    return vec4(r/255.0, g/255.0, b/255.0, 1.0);   
+}
+
+
+
+FSHADER_p6m1 =
+# 将所有点归并到一个三角形中
+vec2 getXY(float x, float y){   
+    float s3 = sqrt(3.0);   
+    x = mod(x, 30.0);   
+    float t = 15.0 * s3;   
+    y =  mod(y, t);   
+
+    if(y > 7.5 * s3){   
+        y = 15.0 * s3 - y;   
+    }   
+    if((s3 / 2.0 * x    y) > 15.0 * s3){   
+        x = x - 15.0;    
+        y = 7.5 * s3 - y;   
+    } else if(y > s3 / 2.0 * x){   
+        x = x    15.0;    
+        y = 7.5 * s3 - y;   
+    }    
+    x = x - 15.0;   
+    y = y - 7.5 * s3 / 2.0;   
+#  sf：单位大小， 默认1.0
+    float sf =    
+sf   
+;    
+    return vec2(sf * x, sf * y);   
+}  
+
+#/ 对三角形中的点进行分类
+int choose(float x, float y){   
+    float s3 = sqrt(3.0);   
+    if(x>=0.0 && y > -1.0 * s3 / 6.0 * x){   
+        return 3;   
+    } else if(x<0.0 && y >= s3 / 6.0 * x){   
+        return 2;   
+    } else{   
+        return 1;   
+    }  
+}
+
+FSHADER_p6m2 =
+    # 将框定范围内的点归并到一个六边形中
+vec2 getXY(float x, float y){   
+    float s3 = sqrt(3.0);   
+    x = mod(x, 30.0);   
+    float t = 15.0 * s3;   
+    y =  mod(y, t);   
+    if(y >= s3 * x    7.5 * s3){   
+        x = x    22.5;   
+        y = y - 7.5 * s3;   
+    }   
+    if(y <= -1.0 * s3 * x    7.5 * s3){   
+        x = x    22.5;   
+        y = y    7.5 * s3;   
+    }   
+    if(y <= s3 * x - 22.5 * s3){   
+        x = x - 22.5;   
+        y = y    7.5 * s3;   
+    }   
+    if(y >= -1.0 * s3 * x    37.5 * s3){   
+        x = x - 22.5;   
+        y = y - 7.5 * s3;   
+    }   
+    x = x - 15.0;   
+    y = y - 7.5 * s3 / 2.0;   
+    float time =    
+sf   
+;    
+    return vec2(time * x, time * y);   
+}  
+
+    # 对六边形中的点进行分类
+int choose(float x, float y){   
+    float s3 = sqrt(3.0);   
+    x = x    15.0;   
+    y = y    7.5 * s3 / 2.0;   
+    if(y < s3 * (x - 7.5) && y < -1.0 * s3 * (x - 22.5)){   
+        return 0;   
+    } else if(y > s3 * (x - 7.5) && y > -1.0 * s3 * (x - 22.5)){   
+        return 3;   
+    } else if(y < 7.5 * s3 && y > s3 * (x - 7.5)){   
+        return 1;   
+    } else if(y > 7.5 * s3 && y < -1.0 * s3 * (x - 22.5)){   
+        return 2;   
+    } else if(y > 7.5 * s3 && y < s3 * (x - 7.5)){   
+        return 4;   
+    } else if(y < 7.5 * s3 && y > -1.0 * s3 * (x - 22.5)){   
+        return 5;   
+    }   
+}
+
+
+FSHADER_p4m =
+vec2 getXY(float x, float y){   
+    x = mod(x, 30.0);   
+    y = mod(y, 15.0);
+    float sf = 
+;
+    return vec2(x,y);   
+}   
+int choose(float x, float y){   
+    float sqrt2 = sqrt(2.0) / 2.0;   
+    if(x>=15.0 && y<= sqrt2 * x    15.0 && y>=-1.0 * sqrt2 * x    15.0){   
+        return 1;   
+    } else if(y<=15.0 && y<= sqrt2 * x    15.0 && y<=-1.0 * sqrt2 * x    15.0){   
+        return 2;   
+    } else if(x<=15.0 && y<= sqrt2 * x    15.0 && y>=-1.0 * sqrt2 * x    15.0){   
+        return 3;   
+    } else {   
+        return 4;   
+    }  
+}
+# 300 * 150
+
+# p6m
+FSHADER_MAIN_120=
+void main(){   
+   float a = radians(120.0);   
+   mat2 m2 = mat2(cos(a), -sin(a),sin(a),cos(a));         # 旋转120度
+    vec2 r1 = getXY(gl_FragCoord.x,gl_FragCoord.y);   
+    vec2 r2 = r1 * m2;   
+    vec2 r3 = r2 * m2;   
+
+    if( choose(r1[0],r1[1]) == 1 ){   
+        gl_FragColor = M(r1[0],r1[1]);   
+    } else if( choose(r1[0],r1[1]) == 2){   
+       gl_FragColor = M(r2[0],r2[1]);   
+   } else if(choose(r1[0],r1[1]) == 3){   
+       gl_FragColor = M(r3[0],r3[1]);   
+   }
+}
+
+
+# p4m
+FSHADER_MAIN_90 =
+void main(){   
+   float a = radians(90.0);   
+   mat2 m2 = mat2(cos(a), -sin(a),sin(a),cos(a));         # 旋转90度
+    vec2 r1 = getXY(gl_FragCoord.x,gl_FragCoord.y);   
+    vec2 r2 = r1 * m2;   
+    vec2 r3 = r2 * m2;   
+    vec2 r4 = r3 * m2;   
+    if(choose(r1[0],r1[1]) == 1){   
+        gl_FragColor = M(r1[0],r1[1]);   
+    } else if(choose(r1[0],r1[1]) == 2){   
+       gl_FragColor = M(r2[0],r2[1]);   
+   } else if(choose(r1[0],r1[1]) == 3){   
+       gl_FragColor = M(r3[0],r3[1]);   
+   } else {   
+       gl_FragColor = M(r4[0],r4[1]);   
+   }   
+}
+
+# p6m2
+FSHADER_MAIN_60 =
+void main(){   
+   float a = radians(60.0);   
+   mat2 m2 = mat2(cos(a), -sin(a),sin(a),cos(a));      # 旋转90度
+    vec2 r0 = getXY(gl_FragCoord.x,gl_FragCoord.y);   
+    vec2 r1 = r0 * m2;   
+    vec2 r2 = r1 * m2;   
+    vec2 r3 = r2 * m2;   
+    vec2 r4 = r3 * m2;   
+    vec2 r5 = r4 * m2;   
+    if(choose(r0[0],r0[1]) == 0){   
+        gl_FragColor = M(r0[0],r0[1]);   
+    } else if(choose(r0[0],r0[1]) == 1){   
+       gl_FragColor = M(r1[0], r1[1]);   
+   } else if(choose(r0[0],r0[1]) == 2){   
+       gl_FragColor = M(r2[0], r2[1]);   
+   } else if(choose(r0[0],r0[1]) == 3){   
+       gl_FragColor = M(r3[0], r3[1]);   
+   } else if(choose(r0[0],r0[1]) == 4){   
+       gl_FragColor = M(r4[0], r4[1]);   
+   } else if(choose(r0[0],r0[1]) == 5){   
+       gl_FragColor = M(r5[0], r5[1]);   
+    }   
+}
+
+FSHADER_MAIN_test=
+void main(){   
+    float x = gl_FragCoord.x;   
+    float y = gl_FragCoord.y;   
+    if(x>10.0){   
+        gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);   
+    }else {   
+        gl_FragColor = vec4(0.0, 1.0, 0.0, 1.0);   
+    }   
+}
